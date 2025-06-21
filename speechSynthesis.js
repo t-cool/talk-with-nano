@@ -20,7 +20,7 @@ async function readAloudTexts() {
         const session = await LanguageModel.create({
             maxTokens: 20 // 約50文字程度に制限
         });
-        const response = await session.prompt(`${lastText}。短く簡潔に20文字以内で答えてください。`);
+        const response = await session.prompt(`${lastText}. Please answer briefly and concisely in English within 20 words.`);
         _speakActualResponse(response); // Use the helper for actual speaking
         session.destroy(); // Clean up the session
     } catch (error) {
