@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>parrot</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+    <!-- Chat画面 -->
+    <div class="chat-container">
+        <div id="log"></div>
+    </div>
+
+    <!-- コントロール・エリア -->
+    <div class="control-panel">
+        <!-- 言語選択 -->
+        <label for="languageSelection"></label>
+        <select id="languageSelection">
+            <option value="en-US">English</option>
+            <option value="ja-JP">日本語</option>
+            <!-- 他の言語を追加 -->
+        </select>
+        <!-- 音声切り替え -->
+        <select id="voiceSelection"></select>
+
+        <!-- 開始ボタン -->
+        <button id="start">Start</button>
+        <!-- 停止ボタン -->
+        <button id="stop" disabled>Stop</button>
+    </div>
+    <!-- 初期設定 -->
+    <script>
+    async function prepare() {
+        const session = await LanguageModel.create();
+    }
+    prepare();
+    </script>   
+    <!-- 音声認識 -->
+    <script src="./speechRecognition.js"></script>
+    <!-- 音声再生 -->
+    <script src="./speechSynthesis.js"></script>
+    <!-- 音声選択 -->
+    <script src="./voiceList.js"></script>
+    <!-- UI 上のロジック -->
+    <script src="./main.js"></script>
+</body>
+</html>
