@@ -18,9 +18,20 @@ async function readAloudTexts() {
 
     try {
         const session = await LanguageModel.create({
-            maxTokens: 20 // 約50文字程度に制限
+            maxTokens: 50 // 文脈を含むためトークン数を増加
         });
-        const response = await session.prompt(`${lastText}. Please answer briefly and concisely in English within 20 words.`);
+        
+        // RAGシステムから文脈を取得
+        const context = await conversationRAG.getContext();
+        const promptWithContext = context 
+            ? `${context}\n\nCurrent question: ${lastText}. Please answer briefly and concisely in English within 20 words.`
+            : `${lastText}. Please answer briefly and concisely in English within 20 words.`;
+        
+        const response = await session.prompt(promptWithContext);
+        
+        // 対話をRAGシステムに記録
+        conversationRAG.addConversation(lastText, response);
+        
         _speakActualResponse(response); // Use the helper for actual speaking
         session.destroy(); // Clean up the session
     } catch (error) {
