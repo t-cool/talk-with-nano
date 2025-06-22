@@ -18,14 +18,14 @@ async function readAloudTexts() {
 
     try {
         const session = await LanguageModel.create({
-            maxTokens: 50 // 文脈を含むためトークン数を増加
+            maxTokens: 20 // 文脈を含むためトークン数を増加
         });
         
         // RAGシステムから文脈を取得
         const context = await conversationRAG.getContext();
         const promptWithContext = context 
-            ? `${context}\n\nCurrent question: ${lastText}. Please answer briefly and concisely in English within 20 words.`
-            : `${lastText}. Please answer briefly and concisely in English within 20 words.`;
+            ? ` Please answer briefly and concisely in English within 20 words. ${context}\n\nCurrent question: ${lastText}.`
+            : ` Please answer briefly and concisely in English within 20 words. ${lastText}. Please answer briefly and concisely in English within 20 words.`;
         
         const response = await session.prompt(promptWithContext);
         
